@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- DaisyUI -->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" 
+type="text/css" />
+
+ <!-- Style -->
+ <link rel="stylesheet" href="./style/styles.css">
+
+<!--google font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+<!-- font awesome icon-->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+   <header class="bg-slate-100 shadow-sm">
+    <section class="pt-3 pb-4 pr-16 pl-16 flex justify-between ">
+        <div class="flex items-center gap-2">
+            <img src="./assets/github-logo.png" alt="" class="w-12">
+            <a class="text-2xl font-bold"> GitHub Issues Tracker</a>
+        </div>
+
+        <div>
+            <div class="flex gap-2">
+   <div class="relative w-64">
+  
+  <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+  <input
+    type="text"
+    placeholder="Search issues..."
+    class="input input-bordered w-full pl-10"
+  />
+
+</div>
+    <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn  ">
+        <div>
+          <button class="btn btn-primary text-[16px] font-semibold"><i class="fa-solid fa-plus items-center"></i>New Issue</button>
+        </div>
+      </div>
+      <ul
+        tabindex="-1"
+        class="menu menu-sm dropdown-content  rounded-box z-1 mt-3 w-52 p-2 ">
+        <li>
+          <a class="justify-between">
+            Profile
+            <span class="badge">New</span>
+          </a>
+        </li>
+        <li><a>Settings</a></li>
+        <li><a>Logout</a></li>
+      </ul>
+    </div>
+  </div>
+        </div>
+    </section>
+
+   </header>
+  <script src="./script/dashboard.js"></script>
+</body>
+</html>
