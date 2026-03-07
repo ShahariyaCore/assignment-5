@@ -2,131 +2,223 @@ function logout(){
 window.location.href="index.html"
 }
 
-// ================= GLOBAL =================
+
+
+
+function logout(){
+window.location.href="index.html"
+}
+
 let closedCard = [];
 let openCard = [];
-let  currentStatus = "all";
-
-
-const all = document.getElementById("all")
-const openList =document.getElementById("Open")
-const closed =document.getElementById("Closed")
+let currentStatus = "all";
 
 const allSection= document.getElementById("all-Section")
 const closedSection=document.getElementById("closed-Section")
 const openSection=document.getElementById("open-Section")
 
-// ================= FILTER BUTTON STYLE =================
-
 function toggleStyle(id){
-    
-       currentStatus = id;
-    const buttons=document.querySelectorAll("#all, #Open, #Closed");
 
-    buttons.forEach(btn=>{
-    btn.classList.remove("btn-primary")
-    btn.classList.add("btn-soft")})
+currentStatus = id;
 
-    const active = document.getElementById(id);
-  active.classList.remove("btn-soft");
-  active.classList.add("btn-primary");
+const buttons=document.querySelectorAll("#all, #Open, #Closed");
 
+buttons.forEach(btn=>{
+btn.classList.remove("btn-primary")
+btn.classList.add("btn-soft")
+})
 
-   
+const active = document.getElementById(id);
+active.classList.remove("btn-soft");
+active.classList.add("btn-primary");
 
-   // ===== FIX: className mistake removed =====
-  if (id === "all") {
-    allSection.classList.remove("hidden");
-    closedSection.classList.add("hidden");
-    openSection.classList.add("hidden")
-  }
+if (id === "all") {
 
-  if (id === "Open") {
-    allSection.classList.add("hidden");
-     openSection.classList.remove("hidden");
-    closedSection.classList.add("hidden")
-  }
+allSection.classList.remove("hidden");
+openSection.classList.add("hidden");
+closedSection.classList.add("hidden");
 
-  if (id === "Closed") {
-     allSection.classList.add("hidden");
-    openSection.classList.add("hidden");
-    closedSection.classList.remove("hidden")
-   
-  }
+displayIssues([...openCard, ...closedCard]);
 }
 
-toggleStyle("all")
+if (id === "Open") {
+
+allSection.classList.add("hidden");
+openSection.classList.remove("hidden");
+closedSection.classList.add("hidden");
+
+displayIssues(openCard);
+}
+
+if (id === "Closed") {
+
+allSection.classList.add("hidden");
+openSection.classList.add("hidden");
+closedSection.classList.remove("hidden");
+
+displayIssues(closedCard);
+}
+
+}
 
 
 const loadIssues = () => {
-  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
-    .then(res => res.json())
-    .then(data => {
-      const issues = data.data;
 
-      openCard = issues.filter(issue => issue.status === "open");
-      closedCard = issues.filter(issue => issue.status === "closed");
+fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
 
-      displayIssues(issues);
-    });
+.then(res => res.json())
+
+.then(data => {
+
+const issues = data.data;
+
+openCard = issues.filter(issue => issue.status === "open");
+
+closedCard = issues.filter(issue => issue.status === "closed");
+
+displayIssues([...openCard, ...closedCard]);
+
+toggleStyle("all");
+
+});
+
 };
-
 
 
 const displayIssues = (issues) => {
 
-  const container = document.getElementById("issues-container");
-  container.innerHTML = "";
+const container = document.getElementById("issues-container");
 
-  issues.forEach(issue => {
+container.innerHTML = "";
 
-    const div = document.createElement("div");
+issues.forEach(issue => {
 
-    div.innerHTML = `
-    
-    <div class="bg-white rounded-xl shadow-md p-5 border-t-4 
-    ${issue.status === "open" ? "border-green-500" : "border-purple-500"}">
+const div = document.createElement("div");
 
-        <div class="flex justify-between items-center mb-3">
-            <span class="badge badge-outline capitalize">${issue.status}</span>
-            <span class="badge 
-            ${issue.priority === "high" ? "badge-error" : ""}
-            ${issue.priority === "medium" ? "badge-warning" : ""}
-            ${issue.priority === "low" ? "badge-neutral" : ""}
-            ">
-            ${issue.priority}
-            </span>
-        </div>
+div.onclick = () => openModal(issue);
 
-        <h2 class="font-bold text-lg mb-2">
-        ${issue.title}
-        </h2>
+div.innerHTML = `
 
-        <p class="text-gray-500 text-sm mb-4">
-        ${issue.description.slice(0,80)}...
-        </p>
+<div class="bg-white rounded-xl shadow-md p-5 border-t-4
+${issue.status === "open" ? "border-green-500" : "border-purple-500"}">
 
-        <div class="flex gap-2 flex-wrap mb-4">
-        ${issue.labels.map(label => 
-        `<span class="badge badge-outline">${label}</span>`
-        ).join("")}
-        </div>
+<div class="flex justify-between items-center mb-3">
 
-        <hr>
+<span class="badge badge-outline capitalize">
+${issue.status}
+</span>
 
-        <div class=" flex justify-between text-sm mt-3 text-gray-500">
-            <span>#${issue.id} by ${issue.author}</span>
-            <span>${new Date(issue.createdAt).toLocaleDateString()}</span>
-        </div>
+<span class="badge
+${issue.priority === "high" ? "badge-error" : ""}
+${issue.priority === "medium" ? "badge-warning" : ""}
+${issue.priority === "low" ? "badge-neutral" : ""}">
 
-    </div>
-    
-    `;
+${issue.priority}
 
-    container.appendChild(div);
+</span>
 
-  });
+</div>
+
+<h2 class="font-bold text-lg mb-2">
+${issue.title}
+</h2>
+
+<p class="text-gray-500 text-sm mb-4">
+${issue.description.slice(0,80)}...
+</p>
+
+<div class="flex gap-2 flex-wrap mb-4">
+
+${issue.labels.map(label =>
+`<span class="badge badge-outline">${label}</span>`
+).join("")}
+
+</div>
+
+<hr>
+
+<div class="flex justify-between text-sm mt-3 text-gray-500">
+
+<span>#${issue.id} by ${issue.author}</span>
+
+<span>${new Date(issue.createdAt).toLocaleDateString()}</span>
+
+</div>
+
+</div>
+
+`;
+
+container.appendChild(div);
+
+});
 
 };
 
+
+function openModal(issue){
+
+document.getElementById("modal-title").innerText = issue.title;
+
+document.getElementById("modal-status").innerText = issue.status;
+
+document.getElementById("modal-author").innerText =
+"Opened by " + issue.author;
+
+document.getElementById("modal-date").innerText =
+new Date(issue.createdAt).toLocaleDateString();
+
+document.getElementById("modal-description").innerText =
+issue.description;
+
+document.getElementById("modal-assignee").innerText =
+issue.author;
+
+const priority = document.getElementById("modal-priority");
+
+priority.innerText = issue.priority;
+
+if(issue.priority === "high"){
+priority.className = "badge badge-error";
+}
+else if(issue.priority === "medium"){
+priority.className = "badge badge-warning";
+}
+else{
+priority.className = "badge badge-neutral";
+}
+
+const labelsContainer = document.getElementById("modal-labels");
+
+labelsContainer.innerHTML = issue.labels
+.map(label => `<span class="badge badge-outline">${label}</span>`)
+.join("");
+
+document.getElementById("issueModal").showModal();
+
+}
+
 loadIssues();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
