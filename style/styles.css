@@ -1,3 +1,11 @@
+/* Bangla + English comment */
+/* এখানে Tailwind এর base, components, utilities ইমপোর্ট করা হচ্ছে */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
 *{
     font-family: "Geist", sans-serif;
 }

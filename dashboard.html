@@ -24,7 +24,7 @@ type="text/css" />
 
 </head>
 <body>
-   <header class="bg-slate-100 shadow-sm">
+   <header class="bg-slate-100 shadow-lg">
     <section class="pt-3 pb-4 pr-16 pl-16 flex justify-between ">
         <div class="flex items-center gap-2">
             <img src="./assets/github-logo.png" alt="" class="w-12">
@@ -60,7 +60,7 @@ type="text/css" />
           </a>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li onclick="logout()"><a>Logout</a></li>
       </ul>
     </div>
   </div>
@@ -68,6 +68,89 @@ type="text/css" />
     </section>
 
    </header>
+
+   <main class="container mx-auto">
+    <section>
+        <div class="p-10 text-center">
+<h1 class="text-3xl font-bold">Welcome to Dashboard 🚀</h1>
+<p class="mt-4">You have successfully logged in.🤞😎</p>
+</div>
+    </section>
+
+    <section class="flex gap-3 bg-slate-100 rounded-xl pt-[20px] pb-[20px] pl-[15px] shadow-lg">
+        <button  onclick="toggleStyle('all')" id="all" class="btn btn-primary pl-[25px] pr-[25px]" > All</button>
+       <button onclick="toggleStyle('Open')" id="Open" class="btn btn-soft pl-[25px] pr-[25px]">Open</button>
+       <button onclick="toggleStyle('Closed')" id="Closed" class="btn btn-soft pl-[25px] pr-[25px]">Closed</button>
+    </section>
+
+    <section class="mt-10 bg-slate-100 rounded-md shadow-lg">
+      <div class="flex justify-between items-center hidden py-5 px-7" id="all-Section">
+       <div class="flex items-center gap-3">
+        <div>
+          <img src="./assets/Aperture.png" alt="">
+        </div>
+        <div>
+          <h1>50 Issues</h1>
+          <p>Track and manage your project issues</p>
+         </div>
+        </div> 
+        <div class="flex gap-4">
+          <div class="flex gap-1">
+            <img src="./assets/Open-Status.png" alt="">
+            <h1>Open</h1>
+          </div>
+          <div class="flex gap-1">
+            <img src="./assets/Closed- Status .png" alt="">
+            <h1>Closed</h1>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between items-center hidden py-5 px-7" id="open-Section">
+       <div class="flex items-center gap-3">
+        <div>
+          <img src="./assets/Aperture.png" alt="">
+        </div>
+        <div>
+          <h1>44 Issues</h1>
+          <p>Track and manage your project issues</p>
+         </div>
+        </div> 
+        <div class="flex gap-4">
+          <div class="flex gap-1">
+            <img src="./assets/Open-Status.png" alt="">
+            <h1>Open</h1>
+          </div>
+          
+        </div>
+      </div>
+      <div class="flex justify-between items-center hidden py-5 px-7" id="closed-Section">
+       <div class="flex items-center gap-3">
+        <div>
+          <img src="./assets/Aperture.png" alt="">
+        </div>
+        <div>
+          <h1>6 Issues</h1>
+          <p>Track and manage your project issues</p>
+         </div>
+        </div> 
+        <div class="flex gap-4">
+         
+          <div class="flex gap-1">
+            <img src="./assets/Closed- Status .png" alt="">
+            <h1>Closed</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+    <span class="bg-black"><hr></span>
+
+    <section  class="bg-slate-100 rounded-md shadow-lg pt-[20px]" >
+      <div  class="grid grid-cols-4 gap-7 mx-4" id="issues-container" >
+      
+      </div>
+
+    </section>
+   </main>
   <script src="./script/dashboard.js"></script>
 </body>
 </html>
