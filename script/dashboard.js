@@ -196,8 +196,42 @@ document.getElementById("issueModal").showModal();
 loadIssues();
 
 
+// document.getElementById("search-btn").addEventListener("click",()=>{
 
+//   const input=document.getElementById("input-btn")
+//   const searchValue=input.value.trim().toLowerCase();
+//   console.log(searchValue);
+//   fetch("https://phi-lab-server.vercel.app/api/v1/lab/issue/%7Bid%7D")
+//   .then((res)=>res.json())
+//   .then(data => {
+//       const allWords = data.data;
+//       console.log(allWords);
 
+//       const filterWords = allWords.filter((issue) =>
+//        issue.title.toLowerCase().includes(searchValue)
+//       );
+
+//       displayIssues(filterWords);
+//     });
+// })
+
+document.getElementById("search-btn").addEventListener("click", () => {
+  const input = document.getElementById("input-btn");
+  const searchValue = input.value.trim().toLowerCase();
+
+  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+    .then(res => res.json())
+    .then(data => {
+      const allIssues = data.data;
+
+      const filterWords = allIssues.filter(issue =>
+        issue.title.toLowerCase().includes(searchValue)
+      );
+
+      displayIssues(filterWords);
+    })
+    .catch(err => console.error("Search error:", err));
+});
 
 
 
