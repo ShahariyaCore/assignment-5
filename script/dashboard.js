@@ -5,9 +5,7 @@ window.location.href="index.html"
 
 
 
-function logout(){
-window.location.href="index.html"
-}
+
 
 let closedCard = [];
 let openCard = [];
@@ -102,42 +100,40 @@ div.innerHTML = `
 <div class="bg-white rounded-xl shadow-md p-5 border-t-4
 ${issue.status === "open" ? "border-green-500" : "border-purple-500"}">
 
-<div class="flex justify-between items-center mb-3">
+<div class="flex justify-between items-center mb-3 ">
 
-<span class="badge badge-outline capitalize">
+<span class="badge badge-outline capitalize px-[25px] py-[15px] font-medium ">
 ${issue.status}
 </span>
 
-<span class="badge
-${issue.priority === "high" ? "badge-error" : ""}
-${issue.priority === "medium" ? "badge-warning" : ""}
-${issue.priority === "low" ? "badge-neutral" : ""}">
-
-${issue.priority}
-
+<span id="Soft buttons" class="  px-[25px] py-[15px] text-[16px] font-medium 
+${issue.priority=== "high" ? " btn btn-soft btn-secondary rounded-full" : ""} 
+${issue.priority === "medium" ? "btn btn-soft btn-warning rounded-full" : ""} 
+${issue.priority=== "low" ? "btn btn-active rounded-full" : ""}">
+${issue.priority.toUpperCase()}
 </span>
 
 </div>
 
-<h2 class="font-bold text-lg mb-2">
+<h2 class="font-extrabold text-[16px] mb-2">
 ${issue.title}
 </h2>
 
-<p class="text-gray-500 text-sm mb-4">
+<p class="text-gray-500 text-sm mb-4 font-medium">
 ${issue.description.slice(0,80)}...
 </p>
 
 <div class="flex gap-2 flex-wrap mb-4">
 
 ${issue.labels.map(label =>
-`<span class="badge badge-outline">${label}</span>`
+`<span class="btn btn-outline btn-accent rounded-full px-[15px] py-[5px] text-[16px] font-medium  ">${label}</span>`
 ).join("")}
 
 </div>
 
 <hr>
 
-<div class="flex justify-between text-sm mt-3 text-gray-500">
+<div class=" grid grid-rows-2 gap-5 text-sm mt-3 text-gray-500">
 
 <span>#${issue.id} by ${issue.author}</span>
 
@@ -179,19 +175,19 @@ const priority = document.getElementById("modal-priority");
 priority.innerText = issue.priority;
 
 if(issue.priority === "high"){
-priority.className = "badge badge-error";
+priority.className = "badge badge-error px-[25px] py-[15px] text-[16px]";
 }
 else if(issue.priority === "medium"){
-priority.className = "badge badge-warning";
+priority.className = "badge badge-warning px-[25px] py-[15px] text-[16px]";
 }
 else{
-priority.className = "badge badge-neutral";
+priority.className = "badge badge-neutral px-[25px] py-[15px] text-[16px]";
 }
 
 const labelsContainer = document.getElementById("modal-labels");
 
 labelsContainer.innerHTML = issue.labels
-.map(label => `<span class="badge badge-outline">${label}</span>`)
+.map(label => `<span class="btn btn-outline btn-info rounded-full px-[15px] py-[5px] text-[16px] font-medium ">${label}</span>`)
 .join("");
 
 document.getElementById("issueModal").showModal();
