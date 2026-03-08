@@ -3,10 +3,6 @@ window.location.href="index.html"
 }
 
 
-
-
-
-
 let closedCard = [];
 let openCard = [];
 let currentStatus = "all";
@@ -15,74 +11,77 @@ const allSection= document.getElementById("all-Section")
 const closedSection=document.getElementById("closed-Section")
 const openSection=document.getElementById("open-Section")
 
-function toggleStyle(id){
-
-currentStatus = id;
-
-const buttons=document.querySelectorAll("#all, #Open, #Closed");
-
-buttons.forEach(btn=>{
-btn.classList.remove("btn-primary")
-btn.classList.add("btn-soft")
-})
-
-const active = document.getElementById(id);
-active.classList.remove("btn-soft");
-active.classList.add("btn-primary");
-
-if (id === "all") {
-
-allSection.classList.remove("hidden");
-openSection.classList.add("hidden");
-closedSection.classList.add("hidden");
-
-displayIssues([...openCard, ...closedCard]);
+const manageSpinner=(watch)=>{
+if(watch==true){
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("issues-container").classList.add("hidden");
+}else{
+    document.getElementById("spinner").classList.add("hidden");
+    document.getElementById("issues-container").classList.remove("hidden");
 }
-
-if (id === "Open") {
-
-allSection.classList.add("hidden");
-openSection.classList.remove("hidden");
-closedSection.classList.add("hidden");
-
-displayIssues(openCard);
-}
-
-if (id === "Closed") {
-
-allSection.classList.add("hidden");
-openSection.classList.add("hidden");
-closedSection.classList.remove("hidden");
-
-displayIssues(closedCard);
-}
-
 }
 
 
-const loadIssues = () => {
 
-fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+function toggleStyle(id) {
+  currentStatus = id;
+  // Show spinner while switching
+  manageSpinner(true);
 
-.then(res => res.json())
+  const buttons = document.querySelectorAll("#all, #Open, #Closed");
+  buttons.forEach(btn => {
+    btn.classList.remove("btn-primary");
+    btn.classList.add("btn-soft");
+  });
 
-.then(data => {
+  const active = document.getElementById(id);
+  active.classList.remove("btn-soft");
+  active.classList.add("btn-primary");
 
-const issues = data.data;
+  let issuesToDisplay = [];
 
-openCard = issues.filter(issue => issue.status === "open");
+  if (id === "all") {
+    allSection.classList.remove("hidden");
+    openSection.classList.add("hidden");
+    closedSection.classList.add("hidden");
+    issuesToDisplay = [...openCard, ...closedCard];
+  }
 
-closedCard = issues.filter(issue => issue.status === "closed");
+  if (id === "Open") {
+    allSection.classList.add("hidden");
+    openSection.classList.remove("hidden");
+    closedSection.classList.add("hidden");
+    issuesToDisplay = openCard;
+  }
 
-displayIssues([...openCard, ...closedCard]);
+  if (id === "Closed") {
+    allSection.classList.add("hidden");
+    openSection.classList.add("hidden");
+    closedSection.classList.remove("hidden");
+    issuesToDisplay = closedCard;
+  }
 
-toggleStyle("all");
+  // Spinner visible for 0.1s (100ms)
+  setTimeout(() => {
+    displayIssues(issuesToDisplay);
+    manageSpinner(false); // hide spinner after rendering
+  }, 10); // 100 milliseconds = 0.1 second
+}
 
-});
+ const loadIssues = () => {
+ fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+ .then(res => res.json())
+ .then(data => {
+ const issues = data.data;
+ openCard = issues.filter(issue => issue.status === "open");
+ closedCard = issues.filter(issue => issue.status  === "closed");
+ displayIssues([...openCard, ...closedCard]);
+   toggleStyle("all");
+  });
+  };
 
-};
 
-
+ 
 const displayIssues = (issues) => {
 
 const container = document.getElementById("issues-container");
