@@ -123,12 +123,23 @@ ${issue.description.slice(0,80)}...
 </p>
 
 <div class="flex gap-2 flex-wrap mb-4">
-
-${issue.labels.map(label =>
-`<span class="btn btn-outline btn-accent rounded-full px-[15px] py-[5px] text-[16px] font-medium  ">${label}</span>`
-).join("")}
-
+  ${issue.labels.map(label => {
+    // Map icons to specific labels
+    let iconSrc = "";
+    if (label === "bug") iconSrc = "./assets/Vector (1).png";
+    if (label === "help wanted") iconSrc = "./assets/Vector (2).png";
+    if (label === "enhancement") iconSrc = "./assets/Sparkle.png";
+    
+  
+    return `
+      <span class="btn btn-outline btn-accent rounded-full px-[15px] py-[5px] text-[16px] font-medium flex items-center gap-2">
+        ${iconSrc ? `<img src="${iconSrc}" alt="${label} icon" class="w-4 h-4">` : ""}
+        ${label}
+      </span>
+    `;
+  }).join("")}
 </div>
+
 
 <hr>
 
